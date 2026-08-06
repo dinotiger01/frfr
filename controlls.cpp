@@ -87,7 +87,14 @@ namespace MTG_size_editer {
         }
     }
     QString controlls::getImgByDex(int ig) {
-        return QString::fromStdString(lookForCard(cards[ig].second));
+        auto it = card_map.find(cards[ig].second);
+
+        if (it == card_map.end()) {
+            cout << "Not found: " << cards[ig].second << endl;
+            return "";
+        }
+
+        return QString::fromStdString(it->second);
     }
 
     float controlls::getMultX() {
