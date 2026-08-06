@@ -1,0 +1,41 @@
+//
+// Created by FFlyingFish on 8/2/26.
+//
+
+#ifndef QT6QMLAPP_CONTROLLS_H
+#define QT6QMLAPP_CONTROLLS_H
+
+#include <QObject>
+#include <QtQml>
+#include <QQuickWindow>
+#include <QPixmap>
+#include <QString>
+
+namespace MTG_size_editer {
+    class controlls : public QObject {
+        Q_OBJECT
+        QML_ELEMENT
+        QML_NAMED_ELEMENT(Controlls)
+    public:
+        explicit controlls(QObject *parent = nullptr) : QObject(parent) {}
+
+        Q_INVOKABLE bool logg(QObject *goober);
+        Q_INVOKABLE void setMultC(float multX, float multY);
+        Q_INVOKABLE float getMultY();
+        Q_INVOKABLE void setMultY(float mult);
+        Q_INVOKABLE float getMultX();
+        Q_INVOKABLE void setMultX(float mult);
+        Q_INVOKABLE std::string lookForCard(std::string epp);
+        Q_INVOKABLE void stringToVec(QString s);
+        Q_INVOKABLE int getDex();
+        Q_INVOKABLE QString getImgByDex(int ig);
+    public slots:
+        // Q_INVOKABLE void update();
+
+    private:
+        float mult = 1.0f;
+        QObject* m_qmlImage = nullptr;
+    };
+} // MTG_size_editer
+
+#endif //QT6QMLAPP_CONTROLLS_H

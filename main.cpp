@@ -1,0 +1,31 @@
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+#include "controlls.h"
+
+using namespace Qt::StringLiterals;
+
+int main(int argc, char *argv[]) {
+    QGuiApplication app(argc, argv);
+
+    QQmlApplicationEngine engine;
+    const QUrl url(u"qrc:/qt/qml/MainApplication/main.qml"_s);
+
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
+                     &app, [url](QObject *obj, const QUrl &objUrl) {
+        if (!obj && url == objUrl)
+            QCoreApplication::exit(-1);
+    }, Qt::QueuedConnection);
+
+    engine.load(url);
+
+    MTG_size_editer::controlls controll;
+
+    engine.rootContext()->setContextProperty("controlls", &controll);
+
+
+
+
+
+    return app.exec();
+}
