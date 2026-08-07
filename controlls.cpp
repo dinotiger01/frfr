@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include "controlls.h"
 #include <QString>
 #include <QQuickItem>
@@ -24,12 +25,11 @@ namespace MTG_size_editer {
     float multX = 1;
     float multY = 1;
     float multC = 1;
+    vector<vector<int>> card_pos;
+    vector<string> card_pic;
     std::vector<std::pair<int, string>> cards;
+    unordered_map<string, string> card_map;
 
-
-    // void controlls::update() {
-    //     std::cout << "test" ;
-    // }
 
     void controlls::stringToVec(QString s) {
         // std::cout << s.toStdString() << "\n";
@@ -39,46 +39,35 @@ namespace MTG_size_editer {
         temp.first = 0;
         temp.second = "";
         std::string tring;
-        bool numAss = false;
+        bool numAss = true;
 
         for (int i = 0; i< ss.length(); i++) {
-            // std::cout << ss[i] << "\n";
-            if (ss[i] == ' ') {
-                continue;
-            }
-            if (ss[i] == '\n') {
-                std::cout << "new line";
-                if (tring.length() > 0) {
-                    if (numAss) {
-                        temp.second = tring;
-                        cards.push_back(temp);
-                        numAss = false;
+            if (numAss) {
+                if (ss[i] == ' ') {
+                    try {
+                        temp.first = stoi(tring);
                     }
-
-                    // temp.first = 0;
-                    // temp.second = "";
+                    catch (exception &e) {
+                        cout << e.what();
+                    }
                     tring = "";
-
-
+                    numAss = false;
+                    continue;
                 }
-
-                // empty the pair
-                continue;
-            }
-            if (!numAss) {
-                try {
-                    std::string tss(1, ss[i]);
-                    int num = std::stoi(tss);
-                    temp.first = num;
+                tring += ss[i];
+            }else {
+                if (ss[i] == '\n') {
+                    temp.second = tring;
+                    cards.push_back(temp);
+                    temp.first = 0;
+                    temp.second = "";
+                    tring = "";
                     numAss = true;
                     continue;
-
                 }
-                    catch(const std::exception &e) {
-                    std::cout << e.what();
-                }
+                tring += ss[i];
             }
-            tring += ss[i];
+
 
         }
         // std::cout<< s.toStdString() << "\n\n\n";
@@ -86,7 +75,14 @@ namespace MTG_size_editer {
             std::cout << std::to_string(i.first) << " : " << i.second << "\n";
         }
     }
+
     QString controlls::getImgByDex(int ig) {
+        vector<int> temp = {1,1,1,1};
+        card_pos.push_back(temp);
+
+        string t = "";
+        card_pic.push_back(t);
+
         auto it = card_map.find(cards[ig].second);
 
         if (it == card_map.end()) {
@@ -95,6 +91,10 @@ namespace MTG_size_editer {
         }
 
         return QString::fromStdString(it->second);
+    }
+
+    void controlls::skip(int i) {
+        // cards[i].first = 0;
     }
 
     float controlls::getMultX() {
@@ -123,7 +123,7 @@ namespace MTG_size_editer {
         return cards.size();
     }
 
-    bool controlls::logg(QObject *gooper) {
+    bool controlls::logg(QObject *gooper, int name) {
         if (!gooper) {
             qWarning() << "Error: Object is null!";
             return false;
@@ -153,87 +153,88 @@ namespace MTG_size_editer {
        );
         QImage finalImage = windowImage.copy(cropTarget);
 
-        return finalImage.save("/home/FFlyingFish/Downloads/frfr/my_capture.png", "PNG");
+        return finalImage.save("../output/my_capture.png", "PNG");
     }
 
+    void controlls::logger(QString s) {
+        cout << s.toStdString();
+    }
+
+    int controlls::getPos(int dex, int wit) {
+        return card_pos[dex][wit];
+    }
+
+    void controlls::save(int x, int y, int wid,int hei,int dex, QString pic){
+        card_pos[dex] = {x,y,wid,hei};
+        card_pic[dex] = pic.toStdString();
+    }
 
     size_t WriteCallback(void* contents, size_t size, size_t nmemb, std::string* userp) {
         userp->append((char*)contents, size * nmemb);
         return size * nmemb;
     }
+    vector<string> parCSV(const string& l) {
+        vector<string> res;
+        string field = "";
+        bool quote = false;
 
-    std::string controlls::lookForCard(std::string epp) {
+        for (size_t i = 0; i < l.length(); ++i) {
+            char c = l[i];
+
+            if (c == '"') {
+                if (quote && i + 1 < l.length() && l[i+1] == '"') {
+                    field += '"';
+                    i++;
+                }else {
+                    quote = !quote;
+                }
+            }else if (c == ',' && !quote) {
+                res.push_back(field);
+                field = "";
+            }else {
+                field += c;
+            }
+        }
+        res.push_back(field);
+        return res;
+    }
+
+    void controlls::setCard() {
         // get the file
-        // file serch for card name
-        //return url
+        string tt;
+        ifstream filer("../scryfall-card-image-urls.csv");
+
+        if (!filer.is_open()) {
+            cout << "asjdl;jas;dj";
+        }
+
+
+        if (getline(filer, tt)) {
+            // Header skipped
+        }
 
 
 
-        // std::string eppy = epp;
-        // // if (!epp) return "auh";
-        // CURL* curl = curl_easy_init();
-        // if (!curl) return "uhgh";
-        //
-        // char* output = curl_easy_escape(curl, eppy.c_str(), eppy.length());
-        // if (!output) {
-        //     curl_easy_cleanup(curl);
-        //     return "gtughhh";
-        // }
-        //
-        // std::string encodedName(output);
-        // curl_free(output);
-        // // std::cout << *output;
-        //
-        // std::string url = "https://api.scryfall.com/cards/named?exact=" + encodedName;
-        // std::string readBuffer;
-        // std::cout << url;
-        // // return output;
-        //
-        // curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-        // curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
-        // curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
-        //
-        // struct curl_slist*  header = NULL;
-        // header = curl_slist_append(header, "User-Agent: MyMTGApp/1.0");
-        // header = curl_slist_append(header, "Accept: application/json");
-        // curl_easy_setopt(curl, CURLOPT_HTTPHEADER, header);
-        //
-        // CURLcode res = curl_easy_perform(curl);
-        // // std::cout << res<<"\n";
-        //
-        // curl_slist_free_all(header);
-        // curl_easy_cleanup(curl);
-        //
-        // if (res != CURLE_OK) {
-        //     std::string errMsg = "Network Error: " + std::string(curl_easy_strerror(res));
-        //     // std::cout << "CRITICAL CURL FAILURE: " << errMsg << std::endl
-        //     return errMsg;
-        // }
-        //
-        // if (readBuffer.empty()) {
-        //     return "Error: Empty Server Response";
-        // }
-        //
-        // try {
-        //
-        //     auto jsonData = json::parse(readBuffer);
-        //
-        //     if (jsonData.contains("image_uris")) {
-        //         std::string idStr = jsonData["image_uris"]["png"].get<std::string>();
-        //         std:cout << jsonData["image_uris"]["png"] << std::endl;
-        //         return idStr;
-        //     }
-        //     else if (jsonData.contains("details") && jsonData["details"].is_string()) {
-        //         std::string idstr = "Error: " + jsonData["details"].get<std::string>();
-        //         return idstr;
-        //     }
-        // } catch (const::json::parse_error& e) {
-        //     std::cout << "JSON Parse error: " << e.what() << "\nPayload was:\n" << readBuffer << std::endl;
-        //     return "no";
-        // }
-        //
-        // return "nocar";
+        while (getline (filer, tt)) {
+            // Output text
+            cout << tt;
 
+            // stringstream ss(tt);
+            // string field;
+            vector<string> row = parCSV(tt);
+
+            if (row.size() >= 6) {
+                string name = row[0];
+                string imgurl = row[5];
+
+                card_map[name] = imgurl;
+            }
+        }
+
+        for (auto i: card_map) {
+            cout << i.first << " : " << i.second << endl;
+        }
+        filer.close();
 
     }
 

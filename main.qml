@@ -9,6 +9,9 @@ Window {
     height: 7 * 160
     visible: true
     title: "MTG_APP"
+    Item{
+        id: varia
+    }
     Controlls{
         id: imgScaler
     }
@@ -22,7 +25,7 @@ Window {
             onClicked:{
                 // car.source = "https://gatherer-static.wizards.com/Cards/medium/"+texter.text+".webp"
 
-                // uha.text = imgScaler.lookForCard("Caustic Bronco");
+                imgScaler.setCard();
                 imgScaler.stringToVec(texter.text)
                 // roww.model = imgScaler.getDex()
                 texter.text = ""
@@ -114,31 +117,57 @@ Window {
     ScrollView{
         width: 100
         height: parent.height - 30
+        y: 30
         Column{
             spacing: 10
             Repeater{
                 id: roww
                 // model: imgScale.getDex()
-                Image{
+                Button{
                     width: 100
                     height: 100
-                    source: imgScaler.getImgByDex(index);
+                    background: Image{
+                        anchors{
+                            fill: parent
+                        }
+                        id: imger
+                        source: imgScaler.getImgByDex(index);
+
+                    }
+                    onClicked:{
+                        car.source = imger.source;
+                        varia.width = index;
+
+                        dragAble.x = imgScaler.getPos(index, 0)
+                        dragAble.y = imgScaler.getPos(index, 1)
+                        dragAble.width = imgScaler.getPos(index, 2)
+                        dragAble.height = imgScaler.getPos(index, 3)
+                    }
                 }
             }
         }
     }
 
-    Button{
-        text: "export"
+    Row{
         anchors{
             right: parent.right
             bottom: parent.bottom
         }
-        onClicked:{
-            imgScaler.logg(car);
+        Button{
+            text: "save"
+            onClicked:{
+                imgScaler.logg(car, varia.width);
+                imgScaler.save(dragAble.x,dragAble.y,dragAble.width,dragAble.height, varia.width, dragAble.source)
+            }
+        }
+        Button{
+            text: "skip"
+
+            onClicked:{
+                imgScaler.skip(varia.width);
+            }
         }
     }
-
 
 
 }

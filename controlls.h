@@ -19,16 +19,22 @@ namespace MTG_size_editer {
     public:
         explicit controlls(QObject *parent = nullptr) : QObject(parent) {}
 
-        Q_INVOKABLE bool logg(QObject *goober);
+        Q_INVOKABLE bool logg(QObject *goober, int name);
         Q_INVOKABLE void setMultC(float multX, float multY);
         Q_INVOKABLE float getMultY();
         Q_INVOKABLE void setMultY(float mult);
         Q_INVOKABLE float getMultX();
         Q_INVOKABLE void setMultX(float mult);
-        Q_INVOKABLE std::string lookForCard(std::string epp);
         Q_INVOKABLE void stringToVec(QString s);
         Q_INVOKABLE int getDex();
         Q_INVOKABLE QString getImgByDex(int ig);
+        Q_INVOKABLE void setCard();
+        Q_INVOKABLE void skip(int i);
+        Q_INVOKABLE void logger (QString s);
+        Q_INVOKABLE void save(int x, int y, int wid, int hei,int dex, QString pic);
+        Q_INVOKABLE int getPos(int dex, int wit);
+
+
     public slots:
         // Q_INVOKABLE void update();
 
