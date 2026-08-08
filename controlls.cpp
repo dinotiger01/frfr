@@ -29,7 +29,21 @@ namespace MTG_size_editer {
     vector<string> card_pic;
     std::vector<std::pair<int, string>> cards;
     unordered_map<string, string> card_map;
+    vector<string> miss;
+    vector<pair<pair<vector<int>, string>,string>> ex;
 
+
+    void controlls::exporter(int dex) {
+        int count = cards[dex].first;
+        string name = cards[dex].second;
+        for (int i =0; i < count; i++) {
+            pair<vector<int>, string> temp_pair;
+            vector<int> temp_vec;
+            string tring;
+
+
+        }
+    }
 
     void controlls::stringToVec(QString s) {
         // std::cout << s.toStdString() << "\n";
@@ -67,9 +81,8 @@ namespace MTG_size_editer {
                 }
                 tring += ss[i];
             }
-
-
         }
+        temp.second = tring;
         // std::cout<< s.toStdString() << "\n\n\n";
         for (auto i : cards) {
             std::cout << std::to_string(i.first) << " : " << i.second << "\n";
@@ -94,7 +107,11 @@ namespace MTG_size_editer {
     }
 
     void controlls::skip(int i) {
-        // cards[i].first = 0;
+        cards[i].first = 0;
+        miss.push_back(cards[i].second);
+
+        auto carg = card_map.find(cards[i].second);
+        carg->second = "";
     }
 
     float controlls::getMultX() {
@@ -160,6 +177,9 @@ namespace MTG_size_editer {
         cout << s.toStdString();
     }
 
+    QString controlls::getPic(int dex) {
+        return QString::fromStdString(card_pic[dex]);
+    }
     int controlls::getPos(int dex, int wit) {
         return card_pos[dex][wit];
     }
@@ -311,5 +331,6 @@ namespace MTG_size_editer {
 1 Rootbound Crag
 1 Stomping Ground
 1 Three Tree City
+
 */
 }
