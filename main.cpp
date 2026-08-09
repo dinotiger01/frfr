@@ -1,6 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include <QQmlContext>
+#include <QQmlContext> // <--- CRITICAL: Required for rootContext()
 #include "controlls.h"
 
 using namespace Qt::StringLiterals;
@@ -17,15 +17,14 @@ int main(int argc, char *argv[]) {
             QCoreApplication::exit(-1);
     }, Qt::QueuedConnection);
 
-    engine.load(url);
-
+    // 1. Instantiate your C++ controller class
     MTG_size_editer::controlls controll;
 
+    // 2. REGISTER the property FIRST so QML knows it exists before parsing
     engine.rootContext()->setContextProperty("controlls", &controll);
 
-
-
-
+    // 3. LOAD the UI last
+    engine.load(url);
 
     return app.exec();
 }

@@ -19,7 +19,7 @@ namespace MTG_size_editer {
     public:
         explicit controlls(QObject *parent = nullptr) : QObject(parent) {}
 
-        Q_INVOKABLE bool logg(QObject *goober, int name);
+        Q_INVOKABLE bool logg(QObject *goober);
         Q_INVOKABLE void setMultC(float multX, float multY);
         Q_INVOKABLE float getMultY();
         Q_INVOKABLE void setMultY(float mult);

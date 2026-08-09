@@ -12,11 +12,8 @@
 #include <QImage>
 #include <QRect>
 #include <QDebug>
-#include <curl/curl.h>
-#include <nlohmann/json.hpp>
 #include <vector>
 #include <string>
-using json = nlohmann::json;
 
 using namespace std::chrono_literals;
 using namespace std;
@@ -25,6 +22,7 @@ namespace MTG_size_editer {
     float multX = 1;
     float multY = 1;
     float multC = 1;
+    int name = 0;
     vector<vector<int>> card_pos;
     vector<string> card_pic;
     std::vector<std::pair<int, string>> cards;
@@ -51,7 +49,7 @@ namespace MTG_size_editer {
 
     void controlls::poggers() {
         for (int i = 0; i < 8; i++) {
-            // ex.pop_back();
+            ex.pop_back();
         }
     }
 
@@ -85,7 +83,14 @@ namespace MTG_size_editer {
             cout << ex[i].second[1] << "\n";
 
         }
+
+        ofstream missed("../output/cards_skipped.txt");
+
+        for (int i = 0; i < miss.size(); i++) {
+            missed << miss[i] << endl;
+        }
     }
+
     void controlls::exportfuck(int i, QString img) {
         wtf[i] = img.toStdString();
     }
@@ -99,7 +104,7 @@ namespace MTG_size_editer {
         temp.second = "";
         std::string tring;
         bool numAss = true;
-
+        bool skiper = false;
         for (int i = 0; i< ss.length(); i++) {
             if (numAss) {
                 if (ss[i] == ' ') {
@@ -107,7 +112,9 @@ namespace MTG_size_editer {
                         temp.first = stoi(tring);
                     }
                     catch (exception &e) {
-                        cout << e.what();
+                        cout << e.what() << endl;
+                        skiper = true;
+
                     }
                     tring = "";
                     numAss = false;
@@ -116,8 +123,12 @@ namespace MTG_size_editer {
                 tring += ss[i];
             }else {
                 if (ss[i] == '\n') {
-                    temp.second = tring;
-                    cards.push_back(temp);
+                    if (skiper) {
+                        skiper = false;
+                    }else {
+                        temp.second = tring;
+                        cards.push_back(temp);
+                    }
                     temp.first = 0;
                     temp.second = "";
                     tring = "";
@@ -139,6 +150,8 @@ namespace MTG_size_editer {
 
         if (it == card_map.end()) {
             cout << "Not found: " << cards[ig].second << endl;
+            miss.push_back(cards[ig].second);
+            cards[ig].first = 0;
             return "";
         }
         // wtf.push_back(QString::fromStdString(it->second));
@@ -187,7 +200,7 @@ namespace MTG_size_editer {
         }
         return cards.size();
     }
-    bool controlls::logg(QObject *gooper, int name) {
+    bool controlls::logg(QObject *gooper) {
         if (!gooper) {
             qWarning() << "Error: Object is null!";
             return false;
@@ -217,7 +230,12 @@ namespace MTG_size_editer {
        );
         QImage finalImage = windowImage.copy(cropTarget);
 
-        return finalImage.save("../output/my_capture.png", "PNG");
+        QString dir = "../output/my_capture";
+
+        dir += to_string(name) + ".png";
+        name++;
+
+        return finalImage.save(dir, "PNG");
     }
 
     void controlls::logger(QString s) {
@@ -306,11 +324,16 @@ namespace MTG_size_editer {
 
     }
 
-    /*[COMMANDER]
+    /*
+[COMMANDER]
 1 Muerra, Trash Tactician
+
+[COST 1]
 1 Celestial Reunion
 1 Sol Ring
 1 Vandalblast
+
+[COST 2]
 1 Bakersbane Duo
 1 Bark-Knuckle Boxer
 1 Brazen Collector
@@ -327,6 +350,8 @@ namespace MTG_size_editer {
 1 Take Out the Trash
 1 Trailtracker Scout
 1 Wandertale Mentor
+
+[COST 3]
 1 Adaptive Automaton
 1 Barkform Harvester
 1 Beast Within
@@ -345,6 +370,8 @@ namespace MTG_size_editer {
 1 Sylvan Scavenging
 1 Taurean Mauler
 1 Valley Flamecaller
+
+[COST 4]
 1 Big Score
 1 Chameleon Colossus
 1 Decimate
@@ -356,14 +383,22 @@ namespace MTG_size_editer {
 1 Rust-Shield Rampager
 1 Scrappy Bruiser
 1 Teapot Slinger
+
+[COST 5]
 1 Banner of Kinship
 1 Collective Inferno
 1 Escape to the Wilds
 1 Junkblade Bruiser
 1 Return of the Wildspeaker
 1 Vanquisher's Banner
+
+[COST 6]
 1 Argivian Avenger
+
+[COST 7+]
 1 Blasphemous Act
+
+[LANDS]
 1 Cavern of Souls
 1 Cinder Glade
 1 Command Tower
@@ -379,6 +414,17 @@ namespace MTG_size_editer {
 1 Rootbound Crag
 1 Stomping Ground
 1 Three Tree City
+
+
+// TOKENS
+Copy (C)
+Food (C)
+Treasure (C)
+3/3 - Beast (G)
+3/3 - Raccoon (G)
+1/1 - Rust-Shield Rampager (G)
+1/1 - Prosperous Bandit (R)
+2/2 - Shapeshifter (U)
 
 */
 }

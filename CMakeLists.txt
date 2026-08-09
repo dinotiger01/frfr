@@ -24,7 +24,7 @@ qt_standard_project_setup()
 qt_policy(SET QTP0001 NEW)
 # Define your C++ executable targets
 qt_add_executable(Qt6QmlApp
-#        main.cpp
+        #        main.cpp
 
 )
 
@@ -40,15 +40,15 @@ qt_add_qml_module(Qt6QmlApp
         URI MainApplication
         VERSION 1.0
         QML_FILES
-            main.qml
+        main.qml
         SOURCES
-            main.cpp
-            controlls.cpp
-            controlls.h
+        main.cpp
+        controlls.cpp
+        controlls.h
         RESOURCES
-            test.webp
-            cat.jpg
-            kitty.jpg
+        test.webp
+        cat.jpg
+        kitty.jpg
 )
 
 # Link your executable against the Qt Quick rendering module

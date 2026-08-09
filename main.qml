@@ -199,7 +199,7 @@ Window {
             Button{
                 text: "save"
                 onClicked:{
-                    imgScaler.logg(car, varia.width);
+                    // imgScaler.logg(car, varia.width);
                     imgScaler.save(dragAble.x,dragAble.y,dragAble.width,dragAble.height, varia.width, dragAble.source)
                     imgScaler.exportfuck()
                 }
@@ -478,8 +478,18 @@ Window {
                 right: parent.right
             }
             Button{
+                width: 100
+                height: 50
+                text: "export"
+                onClicked:{
+                    imgScaler.logg(grig);
+                    imgScaler.poggers();
+                }
+            }
+            Button{
                 width:100
                 height: 50
+                text: "load"
                 onClicked:{
                     // imgScaler.poggers(grig)
                     exgrid1big.source = imgScaler.getStrGrid(1,0)
