@@ -60,6 +60,10 @@ Window {
                     onDropped: drop =>{
                         imgScaler.logger(drop.urls)
                         dragAble.source = drop.urls.toString()
+                        dragAble.width  = 100
+                        dragAble.height = 100
+                        dragAble.x = 0
+                        dragAble.y = 0
                     }
                 }
             }
@@ -160,10 +164,14 @@ Window {
                             source: imgScaler.getImgByDex(index);
 
                         }
+                        Component.onCompleted:{
+                            imgScaler.exportfuck(index, imger.source)
+                        }
                         onClicked:{
                             car.source = imger.source;
                             varia.width = index;
 
+                            imgScaler.logger(imger.source)
                             dragAble.x = imgScaler.getPos(index, 0)
                             dragAble.y = imgScaler.getPos(index, 1)
                             dragAble.width = imgScaler.getPos(index, 2)
@@ -184,6 +192,8 @@ Window {
                 onClicked:{
                     tab.visible = false
                     expor.visible = true
+                    imgScaler.exporter()
+                    // imgScaler.exportfuck()
                 }
             }
             Button{
@@ -191,6 +201,7 @@ Window {
                 onClicked:{
                     imgScaler.logg(car, varia.width);
                     imgScaler.save(dragAble.x,dragAble.y,dragAble.width,dragAble.height, varia.width, dragAble.source)
+                    imgScaler.exportfuck()
                 }
             }
             Button{
@@ -206,20 +217,21 @@ Window {
     Item{
         id: expor
         visible: false
-        width: 10 * 160 /1.5
-        height: 14 *160/ 1.5
+        width: 1000
+        height: 1550
         Item{
             id: grig
-            anchors.fill: parent
+            width: 10 * 160 /1.5
+            height: 14 *160/ 1.5
             Grid{
                 anchors.fill: parent
                  columns: 3
                  rows: 3
                 Image{
-                    // id: car
+                    id: exgrid1big
                     width: parent.width / 3
                     height: parent.height / 3
-                    source: "https://cards.scryfall.io/png/front/a/8/a8bc7912-e201-468a-b251-140205cb741c.png?1783903253"
+                    source: imgScaler.getStrGrid(0, 0)
 
                     //5* 160 - (5*160/1.5)
                     //7*160 -(7*160/1.5)
@@ -233,193 +245,209 @@ Window {
                         y: 83*2/3
                         clip: true
                         Image{
-                            // id: dragAble
-                            source: "cat.jpg"
-                            width: sourceSize.width*2/3
-                            height: sourceSize.height*2/3
+                            id: exgrid1small
+                            source: imgScaler.getStrGrid(1,0)
+                            x: imgScaler.getIntGrid(0,0) *2/3
+                            y: imgScaler.getIntGrid(1, 0) *2/3
+                            width: imgScaler.getIntGrid(2, 0) *2/3
+                            height: imgScaler.getIntGrid(3,0) *2/3
                         }
                     }
                 }
                 Image{
-                    // id: car
+                    id: exgrid2big
                     width: parent.width / 3
                     height: parent.height / 3
-                    source: "https://cards.scryfall.io/png/front/a/8/a8bc7912-e201-468a-b251-140205cb741c.png?1783903253"
+                    source: imgScaler.getStrGrid(0, 1)
 
                     //5* 160 - (5*160/1.5)
                     //7*160 -(7*160/1.5)
                     x: 133.5 *2/3
                     y: 186.6 *2/3
                     Item{
-                        // id: stuff
+                        // id: exgrid2small
                         width: 452*2/3
                         height: 331.5*2/3
                         x: 40*2/3
                         y: 83*2/3
                         clip: true
                         Image{
-                            // id: dragAble
-                            source: "cat.jpg"
-                            width: sourceSize.width*2/3
-                            height: sourceSize.height*2/3
+                            id: exgrid2small
+                            source: imgScaler.getStrGrid(1,1)
+                            x: imgScaler.getIntGrid(0,1) *2/3
+                            y: imgScaler.getIntGrid(1, 1) *2/3
+                            width: imgScaler.getIntGrid(2, 1) *2/3
+                            height: imgScaler.getIntGrid(3,1) *2/3
                         }
                     }
                 }
                 Image{
-                    // id: car
+                    id: exgrid3big
                     width: parent.width / 3
                     height: parent.height / 3
-                    source: "https://cards.scryfall.io/png/front/a/8/a8bc7912-e201-468a-b251-140205cb741c.png?1783903253"
+                    source: imgScaler.getStrGrid(0, 2)
 
                     //5* 160 - (5*160/1.5)
                     //7*160 -(7*160/1.5)
                     x: 133.5 *2/3
                     y: 186.6 *2/3
                     Item{
-                        // id: stuff
+                        // id: exgrid3small
                         width: 452*2/3
                         height: 331.5*2/3
                         x: 40*2/3
                         y: 83*2/3
                         clip: true
                         Image{
-                            // id: dragAble
-                            source: "cat.jpg"
-                            width: sourceSize.width*2/3
-                            height: sourceSize.height*2/3
+                            id: exgrid3small
+                            source: imgScaler.getStrGrid(1,2)
+                            x: imgScaler.getIntGrid(0,2) *2/3
+                            y: imgScaler.getIntGrid(1, 2) *2/3
+                            width: imgScaler.getIntGrid(2, 2) *2/3
+                            height: imgScaler.getIntGrid(3,2) *2/3
                         }
                     }
                 }
                 Image{
-                    // id: car
+                    id: exgrid4big
                     width: parent.width / 3
                     height: parent.height / 3
-                    source: "https://cards.scryfall.io/png/front/a/8/a8bc7912-e201-468a-b251-140205cb741c.png?1783903253"
+                    source: imgScaler.getStrGrid(0, 3)
 
                     //5* 160 - (5*160/1.5)
                     //7*160 -(7*160/1.5)
                     x: 133.5 *2/3
                     y: 186.6 *2/3
                     Item{
-                        // id: stuff
+                        // id: exgrid4small
                         width: 452*2/3
                         height: 331.5*2/3
                         x: 40*2/3
                         y: 83*2/3
                         clip: true
                         Image{
-                            // id: dragAble
-                            source: "cat.jpg"
-                            width: sourceSize.width*2/3
-                            height: sourceSize.height*2/3
+                            id: exgrid4small
+                            source: imgScaler.getStrGrid(1,3)
+                            x: imgScaler.getIntGrid(0,3) *2/3
+                            y: imgScaler.getIntGrid(1, 3) *2/3
+                            width: imgScaler.getIntGrid(2, 3) *2/3
+                            height: imgScaler.getIntGrid(3,3) *2/3
                         }
                     }
                 }
                 Image{
-                    // id: car
+                    id: exgrid5big
                     width: parent.width / 3
                     height: parent.height / 3
-                    source: "https://cards.scryfall.io/png/front/a/8/a8bc7912-e201-468a-b251-140205cb741c.png?1783903253"
+                    source: imgScaler.getStrGrid(0, 4)
 
                     //5* 160 - (5*160/1.5)
                     //7*160 -(7*160/1.5)
                     x: 133.5 *2/3
                     y: 186.6 *2/3
                     Item{
-                        // id: stuff
+                        // id: exgrid5small
                         width: 452*2/3
                         height: 331.5*2/3
                         x: 40*2/3
                         y: 83*2/3
                         clip: true
                         Image{
-                            // id: dragAble
-                            source: "cat.jpg"
-                            width: sourceSize.width*2/3
-                            height: sourceSize.height*2/3
+                            id: exgrid5small
+                            source: imgScaler.getStrGrid(1,4)
+                            x: imgScaler.getIntGrid(0,4) *2/3
+                            y: imgScaler.getIntGrid(1, 4) *2/3
+                            width: imgScaler.getIntGrid(2, 4) *2/3
+                            height: imgScaler.getIntGrid(3,4) *2/3
                         }
                     }
                 }
                 Image{
-                    // id: car
+                    id: exgrid6big
                     width: parent.width / 3
                     height: parent.height / 3
-                    source: "https://cards.scryfall.io/png/front/a/8/a8bc7912-e201-468a-b251-140205cb741c.png?1783903253"
+                    source: imgScaler.getStrGrid(0, 5)
 
                     //5* 160 - (5*160/1.5)
                     //7*160 -(7*160/1.5)
                     x: 133.5 *2/3
                     y: 186.6 *2/3
                     Item{
-                        // id: stuff
+                        // id: exgrid6small
                         width: 452*2/3
                         height: 331.5*2/3
                         x: 40*2/3
                         y: 83*2/3
                         clip: true
                         Image{
-                            // id: dragAble
-                            source: "cat.jpg"
-                            width: sourceSize.width*2/3
-                            height: sourceSize.height*2/3
+                            id: exgrid6small
+                            source: imgScaler.getStrGrid(1,5)
+                            x: imgScaler.getIntGrid(0,5) *2/3
+                            y: imgScaler.getIntGrid(1, 5) *2/3
+                            width: imgScaler.getIntGrid(2, 5) *2/3
+                            height: imgScaler.getIntGrid(3,5) *2/3
                         }
                     }
                 }
                 Image{
-                    // id: car
+                    id: exgrid7big
                     width: parent.width / 3
                     height: parent.height / 3
-                    source: "https://cards.scryfall.io/png/front/a/8/a8bc7912-e201-468a-b251-140205cb741c.png?1783903253"
+                    source: imgScaler.getStrGrid(0, 6)
 
                     //5* 160 - (5*160/1.5)
                     //7*160 -(7*160/1.5)
                     x: 133.5 *2/3
                     y: 186.6 *2/3
                     Item{
-                        // id: stuff
+                        // id: exgrid7small
                         width: 452*2/3
                         height: 331.5*2/3
                         x: 40*2/3
                         y: 83*2/3
                         clip: true
                         Image{
-                            // id: dragAble
-                            source: "cat.jpg"
-                            width: sourceSize.width*2/3
-                            height: sourceSize.height*2/3
+                            id: exgrid7small
+                            source: imgScaler.getStrGrid(1,6)
+                            x: imgScaler.getIntGrid(0,6) *2/3
+                            y: imgScaler.getIntGrid(1, 6) *2/3
+                            width: imgScaler.getIntGrid(2, 6) *2/3
+                            height: imgScaler.getIntGrid(3,6) *2/3
                         }
                     }
                 }
                 Image{
-                    // id: car
+                    id: exgrid8big
                     width: parent.width / 3
                     height: parent.height / 3
-                    source: "https://cards.scryfall.io/png/front/a/8/a8bc7912-e201-468a-b251-140205cb741c.png?1783903253"
+                    source: imgScaler.getStrGrid(0, 7)
 
                     //5* 160 - (5*160/1.5)
                     //7*160 -(7*160/1.5)
                     x: 133.5 *2/3
                     y: 186.6 *2/3
                     Item{
-                        // id: stuff
+                        // id: exgrid8small
                         width: 452*2/3
                         height: 331.5*2/3
                         x: 40*2/3
                         y: 83*2/3
                         clip: true
                         Image{
-                            // id: dragAble
-                            source: "cat.jpg"
-                            width: sourceSize.width*2/3
-                            height: sourceSize.height*2/3
+                            id: exgrid8small
+                            source: imgScaler.getStrGrid(1,7)
+                            x: imgScaler.getIntGrid(0,7) *2/3
+                            y: imgScaler.getIntGrid(1, 7) *2/3
+                            width: imgScaler.getIntGrid(2, 7) *2/3
+                            height: imgScaler.getIntGrid(3,7) *2/3
                         }
                     }
                 }
                 Image{
-                    // id: car
+                    id: exgrid9big
                     width: parent.width / 3
                     height: parent.height / 3
-                    source: "https://cards.scryfall.io/png/front/a/8/a8bc7912-e201-468a-b251-140205cb741c.png?1783903253"
+                    source: imgScaler.getStrGrid(0, 8)
 
                     //5* 160 - (5*160/1.5)
                     //7*160 -(7*160/1.5)
@@ -433,12 +461,103 @@ Window {
                         y: 83*2/3
                         clip: true
                         Image{
-                            // id: dragAble
-                            source: "cat.jpg"
-                            width: sourceSize.width*2/3
-                            height: sourceSize.height*2/3
+                            id: exgrid9small
+                            source: imgScaler.getStrGrid(1,8)
+                            x: imgScaler.getIntGrid(0,8) *2/3
+                            y: imgScaler.getIntGrid(1, 8) *2/3
+                            width: imgScaler.getIntGrid(2, 8) *2/3
+                            height: imgScaler.getIntGrid(3,8) *2/3
                         }
                     }
+                }
+            }
+        }
+        Row{
+            anchors{
+                bottom: parent.bottom
+                right: parent.right
+            }
+            Button{
+                width:100
+                height: 50
+                onClicked:{
+                    // imgScaler.poggers(grig)
+                    exgrid1big.source = imgScaler.getStrGrid(1,0)
+                    exgrid2big.source = imgScaler.getStrGrid(1,1)
+                    exgrid3big.source = imgScaler.getStrGrid(1,2)
+
+                    exgrid4big.source = imgScaler.getStrGrid(1,3)
+                    exgrid5big.source = imgScaler.getStrGrid(1,4)
+                    exgrid6big.source = imgScaler.getStrGrid(1,5)
+
+                    exgrid7big.source = imgScaler.getStrGrid(1,6)
+                    exgrid8big.source = imgScaler.getStrGrid(1,7)
+                    exgrid9big.source = imgScaler.getStrGrid(1,8)
+
+
+                    exgrid1small.source = imgScaler.getStrGrid(0,0)
+                    exgrid2small.source = imgScaler.getStrGrid(0,1)
+                    exgrid3small.source = imgScaler.getStrGrid(0,2)
+
+                    exgrid4small.source = imgScaler.getStrGrid(0,3)
+                    exgrid5small.source = imgScaler.getStrGrid(0,4)
+                    exgrid6small.source = imgScaler.getStrGrid(0,5)
+
+                    exgrid7small.source = imgScaler.getStrGrid(0,6)
+                    exgrid8small.source = imgScaler.getStrGrid(0,7)
+                    exgrid9small.source = imgScaler.getStrGrid(0,8)
+
+
+                    exgrid1small.x = imgScaler.getIntGrid(0,0)
+                    exgrid2small.x = imgScaler.getIntGrid(0,1)
+                    exgrid3small.x = imgScaler.getIntGrid(0,2)
+
+                    exgrid4small.x = imgScaler.getIntGrid(0,3)
+                    exgrid5small.x = imgScaler.getIntGrid(0,4)
+                    exgrid6small.x = imgScaler.getIntGrid(0,5)
+
+                    exgrid7small.x = imgScaler.getIntGrid(0,6)
+                    exgrid8small.x = imgScaler.getIntGrid(0,7)
+                    exgrid9small.x = imgScaler.getIntGrid(0,8)
+
+
+                    exgrid1small.y = imgScaler.getIntGrid(1,0)
+                    exgrid2small.y = imgScaler.getIntGrid(1,1)
+                    exgrid3small.y = imgScaler.getIntGrid(1,2)
+
+                    exgrid4small.y = imgScaler.getIntGrid(1,3)
+                    exgrid5small.y = imgScaler.getIntGrid(1,4)
+                    exgrid6small.y = imgScaler.getIntGrid(1,5)
+
+                    exgrid7small.y = imgScaler.getIntGrid(1,6)
+                    exgrid8small.y = imgScaler.getIntGrid(1,7)
+                    exgrid9small.y = imgScaler.getIntGrid(1,8)
+
+
+                    exgrid1small.width = imgScaler.getIntGrid(2,0)
+                    exgrid2small.width = imgScaler.getIntGrid(2,1)
+                    exgrid3small.width = imgScaler.getIntGrid(2,2)
+
+                    exgrid4small.width = imgScaler.getIntGrid(2,3)
+                    exgrid5small.width = imgScaler.getIntGrid(2,4)
+                    exgrid6small.width = imgScaler.getIntGrid(2,5)
+
+                    exgrid7small.width = imgScaler.getIntGrid(2,6)
+                    exgrid8small.width = imgScaler.getIntGrid(2,7)
+                    exgrid9small.width = imgScaler.getIntGrid(2,8)
+
+
+                    exgrid1small.height = imgScaler.getIntGrid(3,0)
+                    exgrid2small.height = imgScaler.getIntGrid(3,1)
+                    exgrid3small.height = imgScaler.getIntGrid(3,2)
+
+                    exgrid4small.height = imgScaler.getIntGrid(3,3)
+                    exgrid5small.height = imgScaler.getIntGrid(3,4)
+                    exgrid6small.height = imgScaler.getIntGrid(3,5)
+
+                    exgrid7small.height = imgScaler.getIntGrid(3,6)
+                    exgrid8small.height = imgScaler.getIntGrid(3,7)
+                    exgrid9small.height = imgScaler.getIntGrid(3,8)
                 }
             }
         }

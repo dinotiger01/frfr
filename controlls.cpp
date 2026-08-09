@@ -30,19 +30,64 @@ namespace MTG_size_editer {
     std::vector<std::pair<int, string>> cards;
     unordered_map<string, string> card_map;
     vector<string> miss;
-    vector<pair<pair<vector<int>, string>,string>> ex;
+    vector<pair<vector<int>, vector<string>>> ex;
+    vector<string> wtf;
+
+    int controlls::getIntGrid(int w, int go) {
+        size_t egg = ex.size() - go - 1;
+        if (ex.empty() || go < 0 || egg >= ex.size()||w < 0 || w >= static_cast<int>(ex[egg].first.size())) {
+            return 0;
+        }
+        return ex[egg].first[w];
+    }
+
+    QString controlls::getStrGrid(int w, int go) {
+        size_t egg = ex.size() - go - 1;
+        if (ex.empty() || go < 0 || egg >= ex.size()||w < 0 || w >= static_cast<int>(ex[egg].first.size())) {
+            return QString();
+        }
+        return QString::fromStdString(ex[egg].second[w]);
+    }
+
+    void controlls::poggers() {
+        for (int i = 0; i < 8; i++) {
+            // ex.pop_back();
+        }
+    }
+
+    void controlls::exporter() {
+        for (int dex = 0; dex < cards.size(); dex++){
+            int count = cards[dex].first;
+            string name = cards[dex].second;
+
+            pair<vector<int>, vector<string>> temp_pair;
+            vector<int> temp_int = card_pos[dex];
+            vector<string> temp_str;
 
 
-    void controlls::exporter(int dex) {
-        int count = cards[dex].first;
-        string name = cards[dex].second;
-        for (int i =0; i < count; i++) {
-            pair<vector<int>, string> temp_pair;
-            vector<int> temp_vec;
-            string tring;
+            temp_str.push_back(card_pic[dex]);
+            temp_str.push_back(wtf[dex]);
+            // temp_str.push_back("asd");
 
+
+            temp_pair.first = temp_int;
+            temp_pair.second = temp_str;
+            for (int i =0; i < count; i++) {
+                ex.push_back(temp_pair);
+            }
+        }
+        for (int i = 0; i < ex.size() - 1; i++) {
+            cout << ex[i].first[0] << ",";
+            cout << ex[i].first[1] << ",";
+            cout << ex[i].first[2] << ",";
+            cout << ex[i].first[3] << " : ";
+            cout << ex[i].second[0] << " , ";
+            cout << ex[i].second[1] << "\n";
 
         }
+    }
+    void controlls::exportfuck(int i, QString img) {
+        wtf[i] = img.toStdString();
     }
 
     void controlls::stringToVec(QString s) {
@@ -90,19 +135,13 @@ namespace MTG_size_editer {
     }
 
     QString controlls::getImgByDex(int ig) {
-        vector<int> temp = {1,1,1,1};
-        card_pos.push_back(temp);
-
-        string t = "";
-        card_pic.push_back(t);
-
         auto it = card_map.find(cards[ig].second);
 
         if (it == card_map.end()) {
             cout << "Not found: " << cards[ig].second << endl;
             return "";
         }
-
+        // wtf.push_back(QString::fromStdString(it->second));
         return QString::fromStdString(it->second);
     }
 
@@ -137,9 +176,17 @@ namespace MTG_size_editer {
     }
 
     int controlls::getDex() {
+        for (int i = 0;i < cards.size();i++) {
+            vector<int> temp = {1,1,1,1};
+            card_pos.push_back(temp);
+
+            string t = " ";
+            card_pic.push_back(t);
+            QString q = " ";
+            wtf.push_back(t);
+        }
         return cards.size();
     }
-
     bool controlls::logg(QObject *gooper, int name) {
         if (!gooper) {
             qWarning() << "Error: Object is null!";
@@ -174,7 +221,7 @@ namespace MTG_size_editer {
     }
 
     void controlls::logger(QString s) {
-        cout << s.toStdString();
+        cout << s.toStdString()<<endl;
     }
 
     QString controlls::getPic(int dex) {
@@ -248,6 +295,7 @@ namespace MTG_size_editer {
                 string imgurl = row[5];
 
                 card_map[name] = imgurl;
+                wtf.push_back(imgurl);
             }
         }
 
