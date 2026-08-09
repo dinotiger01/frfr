@@ -24,10 +24,10 @@
             modules: 'qtshadertools'
 
         - name: Configure CMake
-          run: cmake -B build -S . -G "Visual Studio 17 2022" -A x64
+          run: cmake -B build -S . -G Ninja -DCMAKE_BUILD_TYPE=Release
 
         - name: Build
-          run: cmake --build build --config Release
+          run: cmake --build build
 
         - name: Deploy Qt
           shell: pwsh
