@@ -30,6 +30,36 @@ namespace MTG_size_editer {
     vector<string> miss;
     vector<pair<vector<int>, vector<string>>> ex;
     vector<string> wtf;
+    int importCount = 0;
+
+
+    void controlls::impEX(QString img) {
+        pair<vector<int>, vector<string>> temp_pair;
+        temp_pair.first = {0,0,0,0};
+        temp_pair.second = {"", img.toStdString()};
+
+        for (int i = 0; i < importCount; i++) {
+            ex.push_back(temp_pair);
+        }
+    }
+
+    void controlls::changeThing(int i) {
+        if (importCount + i > 0) {
+            importCount += i;
+        }
+    }
+
+    QString controlls::getThingy() {
+        return QString::fromStdString(to_string(importCount));
+    }
+
+    void controlls::whatmissed() {
+        ofstream missed("../output/cards_skipped.txt");
+
+        for (int i = 0; i < miss.size(); i++) {
+            missed << miss[i] << endl;
+        }
+    }
 
     int controlls::getIntGrid(int w, int go) {
         size_t egg = ex.size() - go - 1;
@@ -82,12 +112,6 @@ namespace MTG_size_editer {
             cout << ex[i].second[0] << " , ";
             cout << ex[i].second[1] << "\n";
 
-        }
-
-        ofstream missed("../output/cards_skipped.txt");
-
-        for (int i = 0; i < miss.size(); i++) {
-            missed << miss[i] << endl;
         }
     }
 

@@ -39,6 +39,12 @@ namespace MTG_size_editer {
         Q_INVOKABLE int getIntGrid(int w, int go);
         Q_INVOKABLE QString getStrGrid(int w, int go);
         Q_INVOKABLE void poggers();
+        Q_INVOKABLE void whatmissed();
+
+        Q_INVOKABLE void changeThing(int i);
+        Q_INVOKABLE QString getThingy();
+
+        Q_INVOKABLE void impEX(QString img);
 
 
     public slots:

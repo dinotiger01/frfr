@@ -5,7 +5,7 @@ import Qt5Compat.GraphicalEffects
 import MainApplication
 
 Window {
-    width: 5 * 160
+    width: 7 * 160
     height: 7 * 160
     visible: true
     title: "MTG_APP"
@@ -212,6 +212,101 @@ Window {
                     roww.itemAt(varia.width).background.source = "kitty.jpg"
                 }
             }
+            Button{
+                text: "missed"
+
+                onClicked: {
+                    imgScaler.whatmissed()
+                }
+            }
+
+        }
+        Column{
+            anchors{
+                right: parent.right
+                verticalCenter: parent.verticalCenter
+            }
+
+            Rectangle{
+                width: parent.width
+                height: 50
+                Text{
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    text: "import"
+                    font.pointSize: 30
+                }
+            }
+            Rectangle{
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: 100/7 * 5
+                height: 100
+                color: "green"
+                Image{
+                    id: impotimg
+                    anchors.fill: parent
+                }
+                DropArea{
+                    anchors.fill: parent
+                    onDropped: drop =>{
+                        impotimg.source = drop.urls.toString();
+                    }
+
+                }
+            }
+            TextArea{
+                id: nameofimp
+            }
+            Row{
+                width: parent.width
+                height: 50
+                Rectangle{
+                    width: parent.width/3
+                    height: 50
+                    Text{
+                        id: countthing
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: "0"
+                        font.pointSize: 15
+                    }
+                }
+                Button{
+                    width: parent.width/3
+                    height: 50
+                    text: "+"
+                    onClicked:{
+                        imgScaler.changeThing(1)
+                        countthing.text = imgScaler.getThingy()
+                    }
+                }
+                Button{
+                    width: parent.width/3
+                    height: 50
+                    text: "-"
+                    onClicked:{
+                        imgScaler.changeThing(-1)
+                        countthing.text = imgScaler.getThingy()
+                    }
+                }
+            }
+            Button{
+                width: parent.width
+                height: 50
+
+                text: "accept"
+
+                onClicked:{
+                    imgScaler.impEX(impotimg.source)
+                    lig.text += countthing.text + " : " + nameofimp.text + "\n"
+                    countthing.text = ""
+                }
+            }
+            Text{
+                id: lig
+                text: ""
+            }
+
+
         }
     }
     Item{
