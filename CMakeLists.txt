@@ -30,7 +30,6 @@ qt_add_qml_module(Qt6QmlApp
         controlls.cpp
         controlls.h
         RESOURCES
-        test.webp
         cat.jpg
         kitty.jpg
 )
