@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Window
+import QtQuick.Controls.Basic
 // import Qt5Compat.GraphicalEffects
 import MainApplication
 
@@ -21,6 +22,12 @@ Window {
         Row{
             TextArea{
                 id: texter
+                width: 250
+                background:Rectangle{
+                    anchors.fill: parent
+                    color: "black"
+                    radius: 5
+                }
             }
             Button{
                 id: uha
@@ -255,6 +262,12 @@ Window {
             }
             TextArea{
                 id: nameofimp
+                width: 250
+                background:Rectangle{
+                    anchors.fill: parent
+                    color: "black"
+                    radius: 5
+                }
             }
             Row{
                 width: parent.width
