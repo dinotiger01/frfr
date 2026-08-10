@@ -32,6 +32,11 @@ Window {
             Button{
                 id: uha
                 text: "find"
+                background:Rectangle{
+                    anchors.fill: parent
+                    color: "black"
+                    radius: 5
+                }
                 onClicked:{
                     // car.source = "https://gatherer-static.wizards.com/Cards/medium/"+texter.text+".webp"
 
@@ -44,6 +49,11 @@ Window {
             }
             Button{
                 text: "load"
+                background:Rectangle{
+                    anchors.fill: parent
+                    color: "black"
+                    radius: 5
+                }
                 onClicked:{
                     // car.source = "https://gatherer-static.wizards.com/Cards/medium/"+texter.text+".webp"
 
@@ -195,6 +205,11 @@ Window {
                 bottom: parent.bottom
             }
             Button{
+                background:Rectangle{
+                    anchors.fill: parent
+                    color: "black"
+                    radius: 5
+                }
                 text: "export"
                 onClicked:{
                     tab.visible = false
@@ -205,6 +220,11 @@ Window {
             }
             Button{
                 text: "save"
+                background:Rectangle{
+                    anchors.fill: parent
+                    color: "black"
+                    radius: 5
+                }
                 onClicked:{
                     // imgScaler.logg(car, varia.width);
                     imgScaler.save(dragAble.x,dragAble.y,dragAble.width,dragAble.height, varia.width, dragAble.source)
@@ -213,7 +233,11 @@ Window {
             }
             Button{
                 text: "skip"
-
+                background:Rectangle{
+                    anchors.fill: parent
+                    color: "black"
+                    radius: 5
+                }
                 onClicked: {
                     imgScaler.skip(varia.width)
                     roww.itemAt(varia.width).background.source = "kitty.jpg"
@@ -221,7 +245,11 @@ Window {
             }
             Button{
                 text: "missed"
-
+                background:Rectangle{
+                    anchors.fill: parent
+                    color: "black"
+                    radius: 5
+                }
                 onClicked: {
                     imgScaler.whatmissed()
                 }
@@ -287,6 +315,11 @@ Window {
                     width: parent.width/3
                     height: 50
                     text: "+"
+                    background:Rectangle{
+                        anchors.fill: parent
+                        color: "black"
+                        radius: 5
+                    }
                     onClicked:{
                         imgScaler.changeThing(1)
                         countthing.text = imgScaler.getThingy()
@@ -296,6 +329,11 @@ Window {
                     width: parent.width/3
                     height: 50
                     text: "-"
+                    background:Rectangle{
+                        anchors.fill: parent
+                        color: "black"
+                        radius: 5
+                    }
                     onClicked:{
                         imgScaler.changeThing(-1)
                         countthing.text = imgScaler.getThingy()
@@ -307,6 +345,11 @@ Window {
                 height: 50
 
                 text: "accept"
+                background:Rectangle{
+                    anchors.fill: parent
+                    color: "black"
+                    radius: 5
+                }
 
                 onClicked:{
                     imgScaler.impEX(impotimg.source)
@@ -589,6 +632,11 @@ Window {
                 width: 100
                 height: 50
                 text: "export"
+                background:Rectangle{
+                    anchors.fill: parent
+                    color: "black"
+                    radius: 5
+                }
                 onClicked:{
                     imgScaler.logg(grig);
                     imgScaler.poggers();
@@ -598,6 +646,11 @@ Window {
                 width:100
                 height: 50
                 text: "load"
+                background:Rectangle{
+                    anchors.fill: parent
+                    color: "black"
+                    radius: 5
+                }
                 onClicked:{
                     // imgScaler.poggers(grig)
                     exgrid1big.source = imgScaler.getStrGrid(1,0)
