@@ -54,10 +54,22 @@ namespace MTG_size_editer {
     }
 
     void controlls::whatmissed() {
-        ofstream missed("../output/cards_skipped.txt");
+        QString outputPath = QDir(QCoreApplication::applicationDirPath())
+                             .filePath("output");
 
-        for (int i = 0; i < miss.size(); i++) {
-            missed << miss[i] << endl;
+        std::filesystem::create_directories(outputPath.toStdString());
+
+        std::ofstream missed(
+            (outputPath + "/cards_skipped.txt").toStdString()
+        );
+
+        if (!missed.is_open()) {
+            std::cerr << "Failed to open cards_skipped.txt\n";
+            return;
+        }
+
+        for (const auto& item : miss) {
+            missed << item << std::endl;
         }
     }
 
@@ -235,37 +247,58 @@ namespace MTG_size_editer {
             qWarning() << "Error: Object is null!";
             return false;
         }
+
         QQuickItem* item = qobject_cast<QQuickItem*>(gooper);
         if (!item) {
-            qWarning() << "Error: This object is a" << gooper->metaObject()->className()
+            qWarning() << "Error: This object is a"
+                       << gooper->metaObject()->className()
                        << "and is not a visual QML item.";
             return false;
         }
+
         QQuickWindow* window = item->window();
         if (!window) {
             qWarning() << "Error: The visual item has not been drawn to a window yet.";
             return false;
         }
+
         QImage windowImage = window->grabWindow();
         if (windowImage.isNull()) {
+            qWarning() << "Error: Could not capture window.";
             return false;
         }
+
         QRectF sceneRect = item->mapRectToScene(item->boundingRect());
-        qreal dpr = window-> devicePixelRatio();
+        qreal dpr = window->devicePixelRatio();
+
         QRect cropTarget(
-           static_cast<int>(sceneRect.x() * dpr),
-           static_cast<int>(sceneRect.y() * dpr),
-           static_cast<int>(sceneRect.width() * dpr),
-           static_cast<int>(sceneRect.height() * dpr)
-       );
+            static_cast<int>(sceneRect.x() * dpr),
+            static_cast<int>(sceneRect.y() * dpr),
+            static_cast<int>(sceneRect.width() * dpr),
+            static_cast<int>(sceneRect.height() * dpr)
+        );
+
         QImage finalImage = windowImage.copy(cropTarget);
 
-        QString dir = "../output/my_capture";
+        // Put output next to the executable
+        QString outputDir =
+            QDir(QCoreApplication::applicationDirPath()).filePath("output/my_capture");
 
-        dir += to_string(name) + ".png";
+        // Create the directories if they don't exist
+        QDir().mkpath(outputDir);
+
+        QString filename =
+            QDir(outputDir).filePath(QString::number(name) + ".png");
+
         name++;
 
-        return finalImage.save(dir, "PNG");
+        if (!finalImage.save(filename, "PNG")) {
+            qWarning() << "Failed to save image:" << filename;
+            return false;
+        }
+
+        qDebug() << "Saved image:" << filename;
+        return true;
     }
 
     void controlls::logger(QString s) {
@@ -317,10 +350,16 @@ namespace MTG_size_editer {
     void controlls::setCard() {
         // get the file
         string tt;
-        ifstream filer("../scryfall-card-image-urls.csv");
+        QString csvPath = QDir(QCoreApplication::applicationDirPath())
+                      .filePath("scryfall-card-image-urls.csv");
+
+        ifstream filer(csvPath.toStdString());
 
         if (!filer.is_open()) {
-            cout << "asjdl;jas;dj";
+            cerr << "Failed to open: "
+                 << csvPath.toStdString()
+                 << endl;
+            return;
         }
 
 

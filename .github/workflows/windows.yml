@@ -38,6 +38,7 @@
           run: |
             mkdir release
             Copy-Item "build/Qt6QmlApp.exe" "release/"
+            Copy-Item "scryfall-card-image-urls.csv" "release/"
             
             windeployqt `
               --release `

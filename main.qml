@@ -23,6 +23,7 @@ Window {
             TextArea{
                 id: texter
                 width: 250
+                color: "light grey"
                 background:Rectangle{
                     anchors.fill: parent
                     color: "black"
