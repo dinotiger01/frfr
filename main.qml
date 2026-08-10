@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Window
-import QtQuick.Controls.Basic
+// import QtQuick.Controls.Basic
 // import Qt5Compat.GraphicalEffects
 import MainApplication
 
@@ -31,11 +31,21 @@ Window {
             }
             Button{
                 id: uha
-                text: "find"
+                width: 80
+                height: 40
                 background:Rectangle{
-                    anchors.fill: parent
+                    anchors{
+                        fill: parent
+                        margins: parent.hovered ? 1 : 2;
+                    }
                     color: "black"
                     radius: 5
+                    Text{
+                        color: "light grey"
+                        text: "find"
+                        font.pointSize: parent.parent.hovered ? 21 : 20;
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                 }
                 onClicked:{
                     // car.source = "https://gatherer-static.wizards.com/Cards/medium/"+texter.text+".webp"
@@ -48,11 +58,22 @@ Window {
                 }
             }
             Button{
-                text: "load"
-                background:Rectangle{
-                    anchors.fill: parent
+                // text: "load"
+                width: 80
+                height: 40
+                background:Rectangle {
+                    anchors {
+                        fill: parent
+                        margins: parent.hovered ? 1 : 2;
+                    }
                     color: "black"
                     radius: 5
+                    Text {
+                        color: "light grey"
+                        text: "load"
+                        font.pointSize: parent.parent.hovered ? 21 : 20;
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                 }
                 onClicked:{
                     // car.source = "https://gatherer-static.wizards.com/Cards/medium/"+texter.text+".webp"
@@ -205,12 +226,22 @@ Window {
                 bottom: parent.bottom
             }
             Button{
-                background:Rectangle{
-                    anchors.fill: parent
+                width: 100
+                height: 40
+                background:Rectangle {
+                    anchors {
+                        fill: parent
+                        margins: parent.hovered ? 1 : 2;
+                    }
                     color: "black"
                     radius: 5
+                    Text {
+                        color: "light grey"
+                        text: "export"
+                        font.pointSize: parent.parent.hovered ? 21 : 20;
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                 }
-                text: "export"
                 onClicked:{
                     tab.visible = false
                     expor.visible = true
@@ -219,11 +250,21 @@ Window {
                 }
             }
             Button{
-                text: "save"
-                background:Rectangle{
-                    anchors.fill: parent
+                width: 80
+                height: 40
+                background:Rectangle {
+                    anchors {
+                        fill: parent
+                        margins: parent.hovered ? 1 : 2;
+                    }
                     color: "black"
                     radius: 5
+                    Text {
+                        color: "light grey"
+                        text: "save"
+                        font.pointSize: parent.parent.hovered ? 21 : 20;
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                 }
                 onClicked:{
                     // imgScaler.logg(car, varia.width);
@@ -232,11 +273,21 @@ Window {
                 }
             }
             Button{
-                text: "skip"
-                background:Rectangle{
-                    anchors.fill: parent
+                width: 80
+                height: 40
+                background:Rectangle {
+                    anchors {
+                        fill: parent
+                        margins: parent.hovered ? 1 : 2;
+                    }
                     color: "black"
                     radius: 5
+                    Text {
+                        color: "light grey"
+                        text: "skip"
+                        font.pointSize: parent.parent.hovered ? 21 : 20;
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                 }
                 onClicked: {
                     imgScaler.skip(varia.width)
@@ -244,11 +295,21 @@ Window {
                 }
             }
             Button{
-                text: "missed"
-                background:Rectangle{
-                    anchors.fill: parent
+                width: 150
+                height: 40
+                background:Rectangle {
+                    anchors {
+                        fill: parent
+                        margins: parent.hovered ? 1 : 2;
+                    }
                     color: "black"
                     radius: 5
+                    Text {
+                        color: "light grey"
+                        text: "load_mis"
+                        font.pointSize: parent.parent.hovered ? 21 : 20;
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                 }
                 onClicked: {
                     imgScaler.whatmissed()
@@ -314,11 +375,19 @@ Window {
                 Button{
                     width: parent.width/3
                     height: 50
-                    text: "+"
                     background:Rectangle{
-                        anchors.fill: parent
+                        anchors{
+                            fill: parent
+                            margins: parent.hovered ? 1 : 2;
+                        }
                         color: "black"
                         radius: 5
+                        Text{
+                            color: "light grey"
+                            text: "+"
+                            font.pointSize: parent.parent.hovered ? 21 : 20;
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
                     }
                     onClicked:{
                         imgScaler.changeThing(1)
@@ -328,11 +397,19 @@ Window {
                 Button{
                     width: parent.width/3
                     height: 50
-                    text: "-"
                     background:Rectangle{
-                        anchors.fill: parent
+                        anchors{
+                            fill: parent
+                            margins: parent.hovered ? 1 : 2;
+                        }
                         color: "black"
                         radius: 5
+                        Text{
+                            color: "light grey"
+                            text: "-"
+                            font.pointSize: parent.parent.hovered ? 21 : 20;
+                            anchors.horizontalCenter: parent.horizontalCenter
+                        }
                     }
                     onClicked:{
                         imgScaler.changeThing(-1)
@@ -344,11 +421,19 @@ Window {
                 width: parent.width
                 height: 50
 
-                text: "accept"
                 background:Rectangle{
-                    anchors.fill: parent
+                    anchors{
+                        fill: parent
+                        margins: parent.hovered ? 1 : 2;
+                    }
                     color: "black"
                     radius: 5
+                    Text{
+                        color: "light grey"
+                        text: "accept"
+                        font.pointSize: parent.parent.hovered ? 21 : 20;
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                 }
 
                 onClicked:{
@@ -631,11 +716,20 @@ Window {
             Button{
                 width: 100
                 height: 50
-                text: "export"
+                // text: "export"
                 background:Rectangle{
-                    anchors.fill: parent
+                    anchors{
+                        fill: parent
+                        margins: parent.hovered ? 1 : 2;
+                    }
                     color: "black"
                     radius: 5
+                    Text{
+                        color: "light grey"
+                        text: "export"
+                        font.pointSize: parent.parent.hovered ? 21 : 20;
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                 }
                 onClicked:{
                     imgScaler.logg(grig);
@@ -645,11 +739,20 @@ Window {
             Button{
                 width:100
                 height: 50
-                text: "load"
+                // text: "load"
                 background:Rectangle{
-                    anchors.fill: parent
+                    anchors{
+                        fill: parent
+                        margins: parent.hovered ? 1 : 2;
+                    }
                     color: "black"
                     radius: 5
+                    Text{
+                        color: "light grey"
+                        text: "load"
+                        font.pointSize: parent.parent.hovered ? 21 : 20;
+                        anchors.horizontalCenter: parent.horizontalCenter
+                    }
                 }
                 onClicked:{
                     // imgScaler.poggers(grig)
