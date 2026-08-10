@@ -1,7 +1,7 @@
 import QtQuick
 import QtQuick.Controls
 import QtQuick.Window
-import Qt5Compat.GraphicalEffects
+// import Qt5Compat.GraphicalEffects
 import MainApplication
 
 Window {
